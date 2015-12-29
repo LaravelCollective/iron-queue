@@ -6,6 +6,7 @@ use IronMQ\IronMQ;
 use Illuminate\Http\Request;
 use Collective\IronQueue\IronQueue;
 use Illuminate\Contracts\Encryption\Encrypter as EncrypterContract;
+use Illuminate\Queue\Connectors\ConnectorInterface;
 
 class IronConnector implements ConnectorInterface
 {
