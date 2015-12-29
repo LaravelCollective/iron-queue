@@ -29,6 +29,7 @@ class IronConnector implements ConnectorInterface
      *
      * @param \Illuminate\Contracts\Encryption\Encrypter $crypt
      * @param \Illuminate\Http\Request                   $request
+     *
      * @return void
      */
     public function __construct(EncrypterContract $crypt, Request $request)
