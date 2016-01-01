@@ -2,11 +2,11 @@
 
 namespace Collective\IronQueue\Connectors;
 
-use IronMQ\IronMQ;
-use Illuminate\Http\Request;
 use Collective\IronQueue\IronQueue;
 use Illuminate\Contracts\Encryption\Encrypter as EncrypterContract;
+use Illuminate\Http\Request;
 use Illuminate\Queue\Connectors\ConnectorInterface;
+use IronMQ\IronMQ;
 
 class IronConnector implements ConnectorInterface
 {
@@ -40,8 +40,8 @@ class IronConnector implements ConnectorInterface
 
     /**
      * Establish a queue connection.
-     * @param  array  $config
      *
+     * @param array $config
      * @param array $config
      *
      * @return \Illuminate\Contracts\Queue\Queue
