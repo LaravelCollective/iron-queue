@@ -1,8 +1,8 @@
 <?php
 
-namespace Illuminate\Queue\Connectors;
+namespace Collective\IronQueue\Connectors;
 
-use Illuminate\Queue\IronQueue;
+use Collective\IronQueue\IronQueue;
 use Illuminate\Contracts\Encryption\Encrypter as EncrypterContract;
 use Illuminate\Http\Request;
 use Illuminate\Queue\Connectors\ConnectorInterface;

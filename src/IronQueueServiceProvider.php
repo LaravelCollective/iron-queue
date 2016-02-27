@@ -1,6 +1,6 @@
 <?php
 
-namespace Illuminate\Queue;
+namespace Collective\IronQueue;
 
 use Illuminate\Support\ServiceProvider;
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace Illuminate\Queue;
+namespace Collective\IronQueue;
 
-use Illuminate\Queue\Jobs\IronJob;
+use Collective\IronQueue\Jobs\IronJob;
 use Illuminate\Contracts\Queue\Queue as QueueContract;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;

@@ -1,8 +1,8 @@
 <?php
 
-namespace Illuminate\Queue\Jobs;
+namespace Collective\IronQueue\Jobs;
 
-use Illuminate\Queue\IronQueue;
+use Collective\IronQueue\IronQueue;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Queue\Job as JobContract;
 use Illuminate\Queue\Jobs\Job;
@@ -13,7 +13,7 @@ class IronJob extends Job implements JobContract
     /**
      * The Iron queue instance.
      *
-     * @var \Illuminate\Queue\IronQueue
+     * @var \Collective\IronQueue\IronQueue
      */
     protected $iron;
 
@@ -35,7 +35,7 @@ class IronJob extends Job implements JobContract
      * Create a new job instance.
      *
      * @param \Illuminate\Container\Container $container
-     * @param \Illuminate\Queue\IronQueue $iron
+     * @param \Collective\IronQueue\IronQueue $iron
      * @param object                          $job
      * @param bool                            $pushed
      *
@@ -155,7 +155,7 @@ class IronJob extends Job implements JobContract
     /**
      * Get the underlying Iron queue instance.
      *
-     * @return \Illuminate\Queue\IronQueue
+     * @return \Collective\IronQueue\IronQueue
      */
     public function getIron()
     {
