@@ -85,7 +85,7 @@ class IronJob extends Job implements JobContract
             return;
         }
 
-        $this->iron->deleteMessage($this->getQueue(), $this->job->id);
+        $this->iron->deleteMessage($this->getQueue(), $this->job->id, $this->job->reservation_id);
     }
 
     /**

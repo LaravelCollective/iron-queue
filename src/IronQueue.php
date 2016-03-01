@@ -135,7 +135,7 @@ class IronQueue extends Queue implements QueueContract
     {
         $queue = $this->getQueue($queue);
 
-        $job = $this->iron->getMessage($queue);
+        $job = $this->iron->reserveMessage($queue);
 
         // If we were able to pop a message off of the queue, we will need to decrypt
         // the message body, as all Iron.io messages are encrypted, since the push
@@ -152,12 +152,13 @@ class IronQueue extends Queue implements QueueContract
      *
      * @param string $queue
      * @param string $id
+     * @param string $reservation_id
      *
      * @return void
      */
-    public function deleteMessage($queue, $id)
+    public function deleteMessage($queue, $id, $reservation_id)
     {
-        $this->iron->deleteMessage($queue, $id);
+        $this->iron->deleteMessage($queue, $id, $reservation_id);
     }
 
     /**
