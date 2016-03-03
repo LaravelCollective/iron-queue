@@ -75,7 +75,7 @@ class IronQueueTest extends PHPUnit_Framework_TestCase
         $crypt = m::mock('Illuminate\Contracts\Encryption\Encrypter');
         $queue->setEncrypter($crypt);
         $queue->setContainer(m::mock('Illuminate\Container\Container'));
-        $iron->shouldReceive('getMessage')->once()->with('default')->andReturn($job = m::mock('IronMQ_Message'));
+        $iron->shouldReceive('reserveMessage')->once()->with('default')->andReturn($job = m::mock('IronMQ_Message'));
         $job->body = 'foo';
         $crypt->shouldReceive('decrypt')->once()->with('foo')->andReturn('foo');
         $result = $queue->pop();
@@ -89,7 +89,7 @@ class IronQueueTest extends PHPUnit_Framework_TestCase
         $crypt = m::mock('Illuminate\Contracts\Encryption\Encrypter');
         $queue->setEncrypter($crypt);
         $queue->setContainer(m::mock('Illuminate\Container\Container'));
-        $iron->shouldReceive('getMessage')->once()->with('default')->andReturn($job = m::mock('IronMQ_Message'));
+        $iron->shouldReceive('reserveMessage')->once()->with('default')->andReturn($job = m::mock('IronMQ_Message'));
         $job->body = 'foo';
         $crypt->shouldReceive('decrypt')->never();
         $result = $queue->pop();

@@ -21,7 +21,7 @@ class QueueIronJobTest extends PHPUnit_Framework_TestCase
     public function testDeleteRemovesTheJobFromIron()
     {
         $job = $this->getJob();
-        $job->getIron()->shouldReceive('deleteMessage')->once()->with('default', 1);
+        $job->getIron()->shouldReceive('deleteMessage')->once()->with('default', 1, 2);
 
         $job->delete();
     }
@@ -53,7 +53,7 @@ class QueueIronJobTest extends PHPUnit_Framework_TestCase
         return new Collective\IronQueue\Jobs\IronJob(
             m::mock('Illuminate\Container\Container'),
             m::mock('Collective\IronQueue\IronQueue'),
-            (object) ['id' => 1, 'body' => json_encode(['job' => 'foo', 'data' => ['data'], 'attempts' => 1, 'queue' => 'default']), 'timeout' => 60]
+            (object) ['id' => 1, 'reservation_id' => 2, 'body' => json_encode(['job' => 'foo', 'data' => ['data'], 'attempts' => 1, 'queue' => 'default']), 'timeout' => 60]
         );
     }
 }
