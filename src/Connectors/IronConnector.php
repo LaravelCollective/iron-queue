@@ -60,6 +60,6 @@ class IronConnector implements ConnectorInterface
             $iron->ssl_verifypeer = $config['ssl_verifypeer'];
         }
 
-        return new IronQueue($iron, $this->request, $config['queue'], $config['encrypt']);
+        return new IronQueue($iron, $this->request, $config['queue'], $config['encrypt'], $config['timeout']);
     }
 }
