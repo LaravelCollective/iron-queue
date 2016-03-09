@@ -49,11 +49,11 @@ class IronQueue extends Queue implements QueueContract
     /**
      * Create a new IronMQ queue instance.
      *
-     * @param \IronMQ\IronMQ $iron
+     * @param \IronMQ\IronMQ           $iron
      * @param \Illuminate\Http\Request $request
-     * @param string $default
-     * @param bool $shouldEncrypt
-     * @param int $timeout
+     * @param string                   $default
+     * @param bool                     $shouldEncrypt
+     * @param int                      $timeout
      */
     public function __construct(IronMQ $iron, Request $request, $default, $shouldEncrypt = false, $timeout = 60)
     {
