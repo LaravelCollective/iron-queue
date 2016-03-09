@@ -111,21 +111,19 @@ class IronQueueTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Collective\IronQueue\Jobs\IronJob', $result);
     }
 
+    /**
+     * @expectedException IronCore\HttpException
+     */
     public function testDeleteJobWithExpiredReservationIdThrowsAnException()
     {
         $queue = new Collective\IronQueue\IronQueue($iron = m::mock('IronMQ\IronMQ'), m::mock('Illuminate\Http\Request'), 'default', false, 30);
-        //$crypt = m::mock('Illuminate\Contracts\Encryption\Encrypter');
-        //$queue->setEncrypter($crypt);
-        //$queue->setContainer(m::mock('Illuminate\Container\Container'));
+
         $iron->shouldReceive('deleteMessage')->with('default', 1, 'def456')->andThrow('IronCore\HttpException', '{"msg":"Reservation has timed out"}');
 
-        //$job->body = 'foo';
-        //$crypt->shouldReceive('decrypt')->never();
         
         // 'def456' refers to a reservation id that expired
         $queue->deleteMessage('default', 1, 'def456');
 
-        //$this->assertInstanceOf('Collective\IronQueue\Jobs\IronJob', $result);
     }
 
     public function testPushedJobsCanBeMarshaled()
