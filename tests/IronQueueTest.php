@@ -118,7 +118,6 @@ class IronQueueTest extends PHPUnit_Framework_TestCase
     {
         $queue = new Collective\IronQueue\IronQueue($iron = m::mock('IronMQ\IronMQ'), m::mock('Illuminate\Http\Request'), 'default', false, 30);
         $iron->shouldReceive('deleteMessage')->with('default', 1, 'def456')->andThrow('IronCore\HttpException', '{"msg":"Reservation has timed out"}');
-        
         // 'def456' refers to a reservation id that expired
         $queue->deleteMessage('default', 1, 'def456');
     }
