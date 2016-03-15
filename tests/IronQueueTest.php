@@ -75,7 +75,21 @@ class IronQueueTest extends PHPUnit_Framework_TestCase
         $crypt = m::mock('Illuminate\Contracts\Encryption\Encrypter');
         $queue->setEncrypter($crypt);
         $queue->setContainer(m::mock('Illuminate\Container\Container'));
-        $iron->shouldReceive('reserveMessage')->once()->with('default')->andReturn($job = m::mock('IronMQ_Message'));
+        $iron->shouldReceive('reserveMessage')->once()->with('default', 60)->andReturn($job = m::mock('IronMQ_Message'));
+        $job->body = 'foo';
+        $crypt->shouldReceive('decrypt')->once()->with('foo')->andReturn('foo');
+        $result = $queue->pop();
+
+        $this->assertInstanceOf('Collective\IronQueue\Jobs\IronJob', $result);
+    }
+
+    public function testPopProperlyPopsJobOffOfIronWithCustomTimeout()
+    {
+        $queue = new Collective\IronQueue\IronQueue($iron = m::mock('IronMQ\IronMQ'), m::mock('Illuminate\Http\Request'), 'default', true, 120);
+        $crypt = m::mock('Illuminate\Contracts\Encryption\Encrypter');
+        $queue->setEncrypter($crypt);
+        $queue->setContainer(m::mock('Illuminate\Container\Container'));
+        $iron->shouldReceive('reserveMessage')->once()->with('default', 120)->andReturn($job = m::mock('IronMQ_Message'));
         $job->body = 'foo';
         $crypt->shouldReceive('decrypt')->once()->with('foo')->andReturn('foo');
         $result = $queue->pop();
@@ -89,12 +103,23 @@ class IronQueueTest extends PHPUnit_Framework_TestCase
         $crypt = m::mock('Illuminate\Contracts\Encryption\Encrypter');
         $queue->setEncrypter($crypt);
         $queue->setContainer(m::mock('Illuminate\Container\Container'));
-        $iron->shouldReceive('reserveMessage')->once()->with('default')->andReturn($job = m::mock('IronMQ_Message'));
+        $iron->shouldReceive('reserveMessage')->once()->with('default', 60)->andReturn($job = m::mock('IronMQ_Message'));
         $job->body = 'foo';
         $crypt->shouldReceive('decrypt')->never();
         $result = $queue->pop();
 
         $this->assertInstanceOf('Collective\IronQueue\Jobs\IronJob', $result);
+    }
+
+    /**
+     * @expectedException IronCore\HttpException
+     */
+    public function testDeleteJobWithExpiredReservationIdThrowsAnException()
+    {
+        $queue = new Collective\IronQueue\IronQueue($iron = m::mock('IronMQ\IronMQ'), m::mock('Illuminate\Http\Request'), 'default', false, 30);
+        $iron->shouldReceive('deleteMessage')->with('default', 1, 'def456')->andThrow('IronCore\HttpException', '{"msg":"Reservation has timed out"}');
+        // 'def456' refers to a reservation id that expired
+        $queue->deleteMessage('default', 1, 'def456');
     }
 
     public function testPushedJobsCanBeMarshaled()

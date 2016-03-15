@@ -17,5 +17,6 @@ Sample Configuration:
     'project' => 'your-project-id',
     'queue'   => 'your-queue-name',
     'encrypt' => true,
+    'timeout' => 60
 ],
 ```

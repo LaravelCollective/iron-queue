@@ -40,21 +40,28 @@ class IronQueue extends Queue implements QueueContract
     protected $shouldEncrypt;
 
     /**
+     * Number of seconds before the reservation_id times out on a newly popped message.
+     *
+     * @var int
+     */
+    protected $timeout;
+
+    /**
      * Create a new IronMQ queue instance.
      *
      * @param \IronMQ\IronMQ           $iron
      * @param \Illuminate\Http\Request $request
      * @param string                   $default
      * @param bool                     $shouldEncrypt
-     *
-     * @return void
+     * @param int                      $timeout
      */
-    public function __construct(IronMQ $iron, Request $request, $default, $shouldEncrypt = false)
+    public function __construct(IronMQ $iron, Request $request, $default, $shouldEncrypt = false, $timeout = 60)
     {
         $this->iron = $iron;
         $this->request = $request;
         $this->default = $default;
         $this->shouldEncrypt = $shouldEncrypt;
+        $this->timeout = $timeout;
     }
 
     /**
@@ -135,7 +142,7 @@ class IronQueue extends Queue implements QueueContract
     {
         $queue = $this->getQueue($queue);
 
-        $job = $this->iron->reserveMessage($queue);
+        $job = $this->iron->reserveMessage($queue, $this->timeout);
 
         // If we were able to pop a message off of the queue, we will need to decrypt
         // the message body, as all Iron.io messages are encrypted, since the push
