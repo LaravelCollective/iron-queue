@@ -292,7 +292,6 @@ class IronQueue extends Queue implements QueueContract
      */
     public function size($queue = null)
     {
-        // TODO
-        return 0;
+        return (int) $this->iron->getQueue($queue)->size;
     }
 }
