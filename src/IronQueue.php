@@ -315,7 +315,7 @@ class IronQueue extends Queue implements QueueContract
      * @param  \Illuminate\Contracts\Encryption\Encrypter  $encrypter
      * @return void
      */
-    public function setEncrypter(Illuminate\Encryption\Encrypter $encrypter)
+    public function setEncrypter(\Illuminate\Encryption\Encrypter $encrypter)
     {
         $this->encrypter = $encrypter;
     }
