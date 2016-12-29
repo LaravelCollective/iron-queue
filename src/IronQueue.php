@@ -90,7 +90,7 @@ class IronQueue extends Queue implements QueueContract
     public function pushRaw($payload, $queue = null, array $options = [])
     {
         if ($this->shouldEncrypt) {
-            $payload = $this->crypt->encrypt($payload);
+            $payload = $this->getEncrypter()->encrypt($payload);
         }
 
         return $this->iron->postMessage($this->getQueue($queue), $payload, $options)->id;
@@ -235,7 +235,7 @@ class IronQueue extends Queue implements QueueContract
      */
     protected function parseJobBody($body)
     {
-        return $this->shouldEncrypt ? $this->crypt->decrypt($body) : $body;
+        return $this->shouldEncrypt ? $this->getEncrypter()->decrypt($body) : $body;
     }
 
     /**
@@ -280,5 +280,17 @@ class IronQueue extends Queue implements QueueContract
     public function setRequest(Request $request)
     {
         $this->request = $request;
+    }
+
+    /**
+     * Get the size of the queue.
+     *
+     * @param null $queue
+     *
+     * @return int
+     */
+    public function size($queue = null)
+    {
+        return (int) $this->iron->getQueue($queue)->size;
     }
 }
