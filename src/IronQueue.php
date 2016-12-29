@@ -293,13 +293,14 @@ class IronQueue extends Queue implements QueueContract
     {
         return (int) $this->iron->getQueue($queue)->size;
     }
+
     /**
- * Get the encrypter implementation.
- *
- * @return  \Illuminate\Contracts\Encryption\Encrypter
- *
- * @throws \Exception
- */
+     * Get the encrypter implementation.
+     *
+     * @return  \Illuminate\Contracts\Encryption\Encrypter
+     *
+     * @throws \Exception
+     */
     protected function getEncrypter()
     {
         if (is_null($this->encrypter)) {
@@ -307,13 +308,14 @@ class IronQueue extends Queue implements QueueContract
         }
         return $this->encrypter;
     }
+
     /**
      * Set the encrypter implementation.
      *
      * @param  \Illuminate\Contracts\Encryption\Encrypter  $encrypter
      * @return void
      */
-    public function setEncrypter(Encrypter $encrypter)
+    public function setEncrypter(Illuminate\Encryption\Encrypter $encrypter)
     {
         $this->encrypter = $encrypter;
     }
