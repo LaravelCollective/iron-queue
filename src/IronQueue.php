@@ -4,6 +4,7 @@ namespace Collective\IronQueue;
 
 use Collective\IronQueue\Jobs\IronJob;
 use Illuminate\Contracts\Queue\Queue as QueueContract;
+use Illuminate\Contracts\Encryption\Encrypter;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Queue\Queue;
@@ -315,7 +316,7 @@ class IronQueue extends Queue implements QueueContract
      * @param  \Illuminate\Contracts\Encryption\Encrypter  $encrypter
      * @return void
      */
-    public function setEncrypter(\Illuminate\Encryption\Encrypter $encrypter)
+    public function setEncrypter(Encrypter $encrypter)
     {
         $this->encrypter = $encrypter;
     }
