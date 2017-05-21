@@ -44,7 +44,7 @@ class IronConnector implements ConnectorInterface
      * @param array $config
      * @param array $config
      *
-     * @return IronQueue
+     * @return \Illuminate\Contracts\Queue\Queue
      */
     public function connect(array $config)
     {
@@ -59,6 +59,7 @@ class IronConnector implements ConnectorInterface
         if (isset($config['ssl_verifypeer'])) {
             $iron->ssl_verifypeer = $config['ssl_verifypeer'];
         }
+
         $queue = new IronQueue($iron, $this->request, $config['queue'], $config['encrypt'], $config['timeout']);
         $queue->setEncrypter($this->crypt);
 
