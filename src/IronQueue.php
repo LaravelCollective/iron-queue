@@ -281,4 +281,17 @@ class IronQueue extends Queue implements QueueContract
     {
         $this->request = $request;
     }
+
+
+    /**
+     * Get the size of the queue.
+     *
+     * @param null $queue
+     *
+     * @return int
+     */
+    public function size($queue = null)
+    {
+        return (int) $this->iron->getQueue($queue)->size;
+    }
 }
