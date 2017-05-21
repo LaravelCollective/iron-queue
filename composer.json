@@ -15,12 +15,12 @@
     ],
     "require": {
         "php": ">=5.5.9",
-        "illuminate/container": "5.2.*",
-        "illuminate/contracts": "5.2.*",
-        "illuminate/encryption": "5.2.*",
-        "illuminate/http": "5.2.*",
-        "illuminate/queue": "5.2.*",
-        "illuminate/support": "5.2.*",
+        "illuminate/container": "5.3.*",
+        "illuminate/contracts": "5.3.*",
+        "illuminate/encryption": "5.3.*",
+        "illuminate/http": "5.3.*",
+        "illuminate/queue": "5.3.*",
+        "illuminate/support": "5.3.*",
         "iron-io/iron_mq": "~4.0",
         "jeremeamia/superclosure": "~2.0"
     },

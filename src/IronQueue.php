@@ -4,6 +4,7 @@ namespace Collective\IronQueue;
 
 use Collective\IronQueue\Jobs\IronJob;
 use Illuminate\Contracts\Queue\Queue as QueueContract;
+use Illuminate\Contracts\Encryption\Encrypter;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Queue\Queue;
@@ -90,7 +91,7 @@ class IronQueue extends Queue implements QueueContract
     public function pushRaw($payload, $queue = null, array $options = [])
     {
         if ($this->shouldEncrypt) {
-            $payload = $this->crypt->encrypt($payload);
+            $payload = $this->getEncrypter()->encrypt($payload);
         }
 
         return $this->iron->postMessage($this->getQueue($queue), $payload, $options)->id;
@@ -235,7 +236,7 @@ class IronQueue extends Queue implements QueueContract
      */
     protected function parseJobBody($body)
     {
-        return $this->shouldEncrypt ? $this->crypt->decrypt($body) : $body;
+        return $this->shouldEncrypt ? $this->getEncrypter()->decrypt($body) : $body;
     }
 
     /**
@@ -280,5 +281,43 @@ class IronQueue extends Queue implements QueueContract
     public function setRequest(Request $request)
     {
         $this->request = $request;
+    }
+
+    /**
+     * Get the size of the queue.
+     *
+     * @param null $queue
+     *
+     * @return int
+     */
+    public function size($queue = null)
+    {
+        return (int) $this->iron->getQueue($queue)->size;
+    }
+
+    /**
+     * Get the encrypter implementation.
+     *
+     * @return  \Illuminate\Contracts\Encryption\Encrypter
+     *
+     * @throws \Exception
+     */
+    protected function getEncrypter()
+    {
+        if (is_null($this->encrypter)) {
+            throw new Exception('No encrypter has been set on the Queue.');
+        }
+        return $this->encrypter;
+    }
+
+    /**
+     * Set the encrypter implementation.
+     *
+     * @param  \Illuminate\Contracts\Encryption\Encrypter  $encrypter
+     * @return void
+     */
+    public function setEncrypter(Encrypter $encrypter)
+    {
+        $this->encrypter = $encrypter;
     }
 }
