@@ -44,7 +44,7 @@ class IronConnector implements ConnectorInterface
      * @param array $config
      * @param array $config
      *
-     * @return \Illuminate\Contracts\Queue\Queue
+     * @return IronQueue
      */
     public function connect(array $config)
     {
