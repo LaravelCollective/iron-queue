@@ -212,22 +212,6 @@ class IronQueue extends Queue implements QueueContract
     }
 
     /**
-     * Create a payload string from the given job and data.
-     *
-     * @param string $job
-     * @param mixed  $data
-     * @param string $queue
-     *
-     * @return string
-     */
-    protected function createPayload($job, $data = '', $queue = null)
-    {
-        $payload = $this->setMeta(parent::createPayload($job, $data), 'attempts', 1);
-
-        return $this->setMeta($payload, 'queue', $this->getQueue($queue));
-    }
-
-    /**
      * Parse the job body for firing.
      *
      * @param string $body
