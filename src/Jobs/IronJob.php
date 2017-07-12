@@ -53,19 +53,6 @@ class IronJob extends Job implements JobContract
     }
 
     /**
-     * Fire the job.
-     *
-     * @return void
-     */
-    public function fire()
-    {
-        $payload = $this->payload();
-        list($class, $method) = $this->parseJob($payload['job']);
-        $this->instance = $this->resolve($class);
-        $this->instance->{$method}($this, $payload['data']);
-    }
-
-    /**
      * Get the raw body string for the job.
      *
      * @return string
@@ -146,16 +133,6 @@ class IronJob extends Job implements JobContract
     }
 
     /**
-     * Get the IoC container instance.
-     *
-     * @return \Illuminate\Container\Container
-     */
-    public function getContainer()
-    {
-        return $this->container;
-    }
-
-    /**
      * Get the underlying Iron queue instance.
      *
      * @return \Collective\IronQueue\IronQueue
@@ -168,7 +145,7 @@ class IronJob extends Job implements JobContract
     /**
      * Get the underlying IronMQ job.
      *
-     * @return array
+     * @return object
      */
     public function getIronJob()
     {
