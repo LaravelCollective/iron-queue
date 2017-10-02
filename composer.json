@@ -32,5 +32,12 @@
         "psr-4": {
             "Collective\\IronQueue\\": "src/"
         }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Collective\\IronQueue\\IronQueueServiceProvider"
+            ]
+        }
     }
 }
