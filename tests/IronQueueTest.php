@@ -2,8 +2,9 @@
 
 use Mockery as m;
 use SuperClosure\Serializer;
+use PHPUnit\Framework\TestCase;
 
-class IronQueueTest extends PHPUnit_Framework_TestCase
+class IronQueueTest extends TestCase
 {
     public function tearDown()
     {
