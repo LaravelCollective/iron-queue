@@ -1,8 +1,9 @@
 <?php
 
 use Mockery as m;
+use PHPUnit\Framework\TestCase;
 
-class QueueIronJobTest extends PHPUnit_Framework_TestCase
+class QueueIronJobTest extends TestCase
 {
     public function tearDown()
     {
