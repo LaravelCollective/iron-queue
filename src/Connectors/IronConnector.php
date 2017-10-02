@@ -42,7 +42,6 @@ class IronConnector implements ConnectorInterface
      * Establish a queue connection.
      *
      * @param array $config
-     * @param array $config
      *
      * @return IronQueue
      */
