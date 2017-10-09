@@ -3,7 +3,6 @@
 use Mockery as m;
 use PHPUnit\Framework\TestCase;
 use SuperClosure\Serializer;
-use PHPUnit\Framework\TestCase;
 
 class IronQueueTest extends TestCase
 {
