@@ -1,9 +1,10 @@
 <?php
 
 use Mockery as m;
+use PHPUnit\Framework\TestCase;
 use SuperClosure\Serializer;
 
-class IronQueueTest extends PHPUnit_Framework_TestCase
+class IronQueueTest extends TestCase
 {
     public function tearDown()
     {
@@ -18,7 +19,8 @@ class IronQueueTest extends PHPUnit_Framework_TestCase
         $crypt->shouldReceive('encrypt')->once()->with(json_encode(['displayName' => 'foo', 'job' => 'foo', 'maxTries' => null, 'timeout' => null, 'data' => [1, 2, 3], 'queue' => 'default']))->andReturn('encrypted');
         $queue = new Collective\IronQueue\IronQueue($iron, m::mock('Illuminate\Http\Request'), 'default', true);
         $queue->setEncrypter($crypt);
-        $queue->push('foo', [1, 2, 3]);
+
+        $this->assertEquals(1, $queue->push('foo', [1, 2, 3]));
     }
 
     public function testPushProperlyPushesJobOntoIronWithoutEncryption()
@@ -29,7 +31,8 @@ class IronQueueTest extends PHPUnit_Framework_TestCase
         $crypt->shouldReceive('encrypt')->never();
         $queue = new Collective\IronQueue\IronQueue($iron, m::mock('Illuminate\Http\Request'), 'default');
         $queue->setEncrypter($crypt);
-        $queue->push('foo', [1, 2, 3]);
+
+        $this->assertEquals(1, $queue->push('foo', [1, 2, 3]));
     }
 
     public function testDelayedPushProperlyPushesJobOntoIron()
@@ -40,7 +43,7 @@ class IronQueueTest extends PHPUnit_Framework_TestCase
         $crypt->shouldReceive('encrypt')->once()->with(json_encode(['displayName' => 'foo', 'job' => 'foo', 'maxTries' => null, 'timeout' => null, 'data' => [1, 2, 3], 'queue' => 'default']))->andReturn('encrypted');
         $queue = new Collective\IronQueue\IronQueue($iron, m::mock('Illuminate\Http\Request'), 'default', true);
         $queue->setEncrypter($crypt);
-        $queue->later(5, 'foo', [1, 2, 3]);
+        $this->assertEquals(1, $queue->later(5, 'foo', [1, 2, 3]));
     }
 
     public function testPopProperlyPopsJobOffOfIron()
