@@ -267,6 +267,19 @@ class IronQueue extends Queue implements QueueContract
         $this->request = $request;
     }
 
+    protected function createPayload($job, $data = '', $queue = null)
+    {
+        $payload = json_encode($this->createPayloadArray($job, $data, $queue));
+
+        if (JSON_ERROR_NONE !== json_last_error()) {
+            throw new InvalidPayloadException(
+                'Unable to JSON encode payload. Error code: '.json_last_error()
+            );
+        }
+
+        return $payload;
+    }
+
     /**
      * Create a payload array from the given job and data.
      *
