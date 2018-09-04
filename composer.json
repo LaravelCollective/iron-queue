@@ -14,14 +14,14 @@
         }
     ],
     "require": {
-        "php": ">=5.5.9",
-        "illuminate/container": "5.2.*",
-        "illuminate/contracts": "5.2.*",
-        "illuminate/encryption": "5.2.*",
-        "illuminate/http": "5.2.*",
-        "illuminate/queue": "5.2.*",
-        "illuminate/support": "5.2.*",
-        "iron-io/iron_mq": "~2.0",
+        "php": ">=5.6.4",
+        "illuminate/container": "5.6.*",
+        "illuminate/contracts": "5.6.*",
+        "illuminate/encryption": "5.6.*",
+        "illuminate/http": "5.6.*",
+        "illuminate/queue": "5.6.*",
+        "illuminate/support": "5.6.*",
+        "iron-io/iron_mq": "~4.0",
         "jeremeamia/superclosure": "~2.0"
     },
     "require-dev": {

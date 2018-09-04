@@ -2,11 +2,11 @@
 
 namespace Collective\IronQueue\Jobs;
 
-use Illuminate\Support\Arr;
-use Illuminate\Queue\Jobs\Job;
 use Collective\IronQueue\IronQueue;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Queue\Job as JobContract;
+use Illuminate\Queue\Jobs\Job;
+use Illuminate\Support\Arr;
 
 class IronJob extends Job implements JobContract
 {
@@ -34,10 +34,11 @@ class IronJob extends Job implements JobContract
     /**
      * Create a new job instance.
      *
-     * @param  \Illuminate\Container\Container  $container
-     * @param  \Collective\IronQueue\IronQueue  $iron
-     * @param  object  $job
-     * @param  bool    $pushed
+     * @param \Illuminate\Container\Container $container
+     * @param \Collective\IronQueue\IronQueue $iron
+     * @param object                          $job
+     * @param bool                            $pushed
+     *
      * @return void
      */
     public function __construct(Container $container,
@@ -49,16 +50,6 @@ class IronJob extends Job implements JobContract
         $this->iron = $iron;
         $this->pushed = $pushed;
         $this->container = $container;
-    }
-
-    /**
-     * Fire the job.
-     *
-     * @return void
-     */
-    public function fire()
-    {
-        $this->resolveAndFire(json_decode($this->getRawBody(), true));
     }
 
     /**
@@ -84,20 +75,21 @@ class IronJob extends Job implements JobContract
             return;
         }
 
-        $this->iron->deleteMessage($this->getQueue(), $this->job->id);
+        $this->iron->deleteMessage($this->getQueue(), $this->job->id, $this->job->reservation_id);
     }
 
     /**
      * Release the job back into the queue.
      *
-     * @param  int   $delay
+     * @param int $delay
+     *
      * @return void
      */
     public function release($delay = 0)
     {
         parent::release($delay);
 
-        if (! $this->pushed) {
+        if (!$this->pushed) {
             $this->delete();
         }
 
@@ -107,7 +99,8 @@ class IronJob extends Job implements JobContract
     /**
      * Release a pushed job back onto the queue.
      *
-     * @param  int  $delay
+     * @param int $delay
+     *
      * @return void
      */
     protected function recreateJob($delay)
@@ -140,16 +133,6 @@ class IronJob extends Job implements JobContract
     }
 
     /**
-     * Get the IoC container instance.
-     *
-     * @return \Illuminate\Container\Container
-     */
-    public function getContainer()
-    {
-        return $this->container;
-    }
-
-    /**
      * Get the underlying Iron queue instance.
      *
      * @return \Collective\IronQueue\IronQueue
@@ -162,7 +145,7 @@ class IronJob extends Job implements JobContract
     /**
      * Get the underlying IronMQ job.
      *
-     * @return array
+     * @return object
      */
     public function getIronJob()
     {
