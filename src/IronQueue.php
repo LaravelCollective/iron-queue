@@ -76,7 +76,7 @@ class IronQueue extends Queue implements QueueContract
      */
     public function push($job, $data = '', $queue = null)
     {
-        return $this->pushRaw($this->createPayload($job, $data, $queue), $queue);
+        return $this->pushRaw($this->createPayload($job, $queue, $data), $queue);
     }
 
     /**
@@ -127,7 +127,7 @@ class IronQueue extends Queue implements QueueContract
     {
         $delay = $this->secondsUntil($delay);
 
-        $payload = $this->createPayload($job, $data, $queue);
+        $payload = $this->createPayload($job, $queue, $data);
 
         return $this->pushRaw($payload, $queue, compact('delay'));
     }
@@ -275,9 +275,9 @@ class IronQueue extends Queue implements QueueContract
      * @param  string  $queue
      * @return array
      */
-    protected function createPayloadArray($job, $data = '', $queue = null)
+    protected function createPayloadArray($job, $queue, $data = '')
     {
-        return array_merge(parent::createPayloadArray($job, $data, $queue), [
+        return array_merge(parent::createPayloadArray($job, $queue, $data), [
             'queue' => $this->getQueue($queue),
         ]);
     }
